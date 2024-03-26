@@ -12,13 +12,12 @@ export interface Row {
 
 
 export class DataManipulator {
-  static generateRow(serverResponds: ServerRespond[]) {
-    return serverResponds.map((el: any) => {
+  static generateRow(serverResponds: ServerRespond[]): Row {
       const priceABC = (serverResponds[0].top_ask.price + serverResponds[0].top_bid.price) / 2;
       const priceDEF = (serverResponds[1].top_ask.price + serverResponds[1].top_bid.price) / 2;
       const ratio = priceABC / priceDEF;
-      const upper_bound = 1 + 0.10;
-      const lower_bound = 1 - 0.10;
+      const upper_bound = 1 + 0.05;
+      const lower_bound = 1 - 0.05;
       return {
         price_abc: priceABC, 
         price_def: priceDEF, 
@@ -29,6 +28,5 @@ export class DataManipulator {
         lower_bound: lower_bound,
         trigger_alert: (ratio > upper_bound || ratio < lower_bound) ? ratio : undefined,
       };
-    })
-  }
-}
+}}
+
